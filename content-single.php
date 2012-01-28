@@ -21,10 +21,22 @@
 
 	<div class="entry-content">
 		<?php the_content(); ?>
+		
 		<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
 	</div><!-- .entry-content -->
 
 	<footer class="entry-meta">
+		<?php 
+			if ( 'books' == get_post_type() && has_post_thumbnail() ) {
+				$data = get_post_custom();
+				echo '<h5 class="book-author"><em>By</em> <strong>' . _( wptexturize($data['fhhs_book_author'][0]) ) . '</strong></h5>';
+				the_post_thumbnail( 'medium' );
+				echo '<h6 class="book-info">Bibliographic Information</h6>';
+				fhhs_book_the_meta( 'p', 'book-citation', 0 );
+				echo '<br />';
+			}
+		?>
+		
 		<?php
 			/* translators: used between list items, there is a space after the comma */
 			$categories_list = get_the_category_list( __( ', ', 'twentyeleven' ) );
@@ -49,6 +61,11 @@
 				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
 			);
 		?>
+		
+		<?php if ( 'books' != get_post_type() ) { ?>
+			<div class="rdbWrapper" data-show-read="1" data-show-send-to-kindle="1" data-show-print="1" data-show-email="1" data-orientation="1" data-version="1" data-text-color="#5c5c5c" data-bg-color="transparent"></div><script type="text/javascript">(function() {var s = document.getElementsByTagName("script")[0],rdb = document.createElement("script"); rdb.type = "text/javascript"; rdb.async = true; rdb.src = document.location.protocol + "//www.readability.com/embed.js"; s.parentNode.insertBefore(rdb, s); })();</script>
+		<?php } ?>
+		
 		<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
 
 		<?php if ( get_the_author_meta( 'description' ) && is_multi_author() ) : // If a user has filled out their description and this is a multi-author blog, show a bio on their entries ?>

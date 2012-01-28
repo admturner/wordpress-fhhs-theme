@@ -22,10 +22,16 @@ get_header(); ?>
 					</header><!-- .entry-header -->
 					
 					<div class="entry-content">	
-					
-						<?php the_content(); ?>
 						
-						<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
+						<?php
+						if ( is_active_sidebar( 'front-page-widget-area' ) ) {
+							dynamic_sidebar( 'front-page-widget-area' );
+						}
+						
+						the_content();
+						
+						wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); 
+						?>
 					
 					</div><!-- .entry-content -->
 					

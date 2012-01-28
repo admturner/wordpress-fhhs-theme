@@ -5,7 +5,7 @@ Description: A child theme based on the WP standard Twenty Eleven theme. FHHS is
 Author: Adam Turner
 Author URI: http://adamturner.org/
 Template: twentyeleven
-Version: 1.0
+Version: 1.2.0
 Tags: dark, light, white, black, gray, one-column, two-columns, left-sidebar, right-sidebar, fixed-width, flexible-width, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-image-header, featured-images, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
 License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ Orange	#d2753e
 Red		#9f1533
 	lighter-red	#bd193d
 	darker-red	#811129
-Teal		#8aab9d
+Teal		#8aab9d // rgb(138, 171, 157)
 	light-teal	#9eb9ae
 	dark-teal	#5e8273
 Tan		#d2be7a
@@ -36,6 +36,7 @@ Width = 960px, 10px margin left and right
 Imports
 ------------------------------------------------------------ */
 @import url('lib/css/reset.css');
+@import url('lib/css/tipTip.css');
 @import url('http://fonts.googleapis.com/css?family=Cardo:400,400italic,700|Cantarell:400,700,400italic,700italic');
 
 body, html {
@@ -66,13 +67,13 @@ h2 {
 	margin: 1em 0 0.6em 0;
 }
 h3 {
-	font: italic 2.1em/1.142857em 'Cardo', Baskerville, 'Book Antiqua', 'Hoefler Text', Garamond, Georgia, serif;
-	margin: 0.5714285em 0;
+	font: italic 2.5em/0.96em 'Cardo', Baskerville, 'Book Antiqua', 'Hoefler Text', Garamond, Georgia, serif;
+	margin: 0.48em 0;
 }
 h4, h5, h6 {
 	color: #5e8273;
 } 
-h4 {
+h4, #nav-single {
 	font: 1.8em/1.333333em Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
 	margin: 1.333333em 0;
 }
@@ -81,8 +82,8 @@ h5, h6, #author-extra p, #site-description {
 	margin: 1em 0 0.84615385em 0;
 }
 p {
-	font: 1.5em/1.6em 'Cardo', Baskerville, 'Book Antiqua', 'Hoefler Text', Garamond, Georgia, serif;
-	margin-bottom: 1.6em;
+	font: 1.7em/1.41176471em 'Cardo', Baskerville, 'Book Antiqua', 'Hoefler Text', Garamond, Georgia, serif;
+	margin-bottom: 1.41176471em;
 }
 pre, code, .edit-link {
 	font: 15px/16px Consolas, 'Lucida Console', Monaco, monospace;
@@ -90,11 +91,14 @@ pre, code, .edit-link {
 .edit-link {
 	display: block;
 }
+blockquote {
+	border-left: 1px solid #973428;
+}
 blockquote p {
-	border-left: 1px solid #973428; margin: 12px 10px; padding-left: 10px;
+	margin: 12px 10px; padding-left: 10px;
 	font-style: italic;
 }
-blockquote cite, .entry-meta {
+blockquote cite, .entry-meta, .description {
 	color: #666; font: italic 13px/18.46px Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
 	margin-bottom: 18.46px;
 }
@@ -135,7 +139,6 @@ sup {
 #primary .vcard p {
 	margin-bottom: 0;
 }
-
 #secondary .vcard h5 {
 	font-size: 13px;
 	line-height: 18.4px;
@@ -149,7 +152,29 @@ sup {
 	line-height: 17.14px;
 	margin-bottom: 24px;
 }
-
+#tiptip_content {
+	font: italic 14px/21px Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
+	border: 1px solid rgba(109,149,132,0.25);
+	background-color: rgb(109,149,132);
+	background-color: rgba(109,149,132,0.92);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), to(#5e8273));
+}
+#tiptip_holder.tip_top #tiptip_arrow_inner {
+	border-top-color: rgb(109,149,132);
+	border-top-color: rgba(109,149,132,0.92);	
+}
+#tiptip_holder.tip_bottom #tiptip_arrow_inner {
+	border-bottom-color: rgb(109,149,132);
+	border-bottom-color: rgba(109,149,132,0.92);
+}
+#tiptip_holder.tip_right #tiptip_arrow_inner {
+	border-right-color: rgb(109,149,132);
+	border-right-color: rgba(109,149,132,0.92);
+}
+#tiptip_holder.tip_left #tiptip_arrow_inner {
+	border-left-color: rgb(109,149,132);
+	border-left-color: rgba(109,149,132,0.92);
+}
 /* ------------------------------------------------------------
 Standard Links
 ------------------------------------------------------------ */
@@ -168,6 +193,19 @@ a:hover, a:focus, a:active {
 #main h1 a:hover, #main h2 a:hover {
 	text-decoration: none;
 }
+/* ------------------------------------------------------------
+Navigation Elements
+-------------------------------------------------------------*/
+#nav-single {
+	text-align: center;
+}
+#nav-single span a:link, #nav-single span a:visited {
+	padding: 5px;
+}
+#nav-single span a:hover, #nav-single span a:focus, #nav-single span a.selected {
+	background: #9f1533;
+	color: #fff;
+}
 
 /* ------------------------------------------------------------
 Static Lists
@@ -175,20 +213,32 @@ Static Lists
 ul, ol {
 	margin: 0;
 }
-ul li, dl dt, dl dd {
-	font: 1.5em/1.6em 'Cardo', Baskerville, 'Book Antiqua', 'Hoefler Text', Garamond, Georgia, serif;
+ul li, ol li, dl dt, dl dd {
+	font: 17px/21px 'Cardo', Baskerville, 'Book Antiqua', 'Hoefler Text', Garamond, Georgia, serif;
 }
-#content ul {
+#content ul li {
 	list-style-type: disc;
-	margin: 0 0 1.6em 1.25em;
+	margin-left: 40px;
 }
 #content ul.no-bullet {
 	list-style-type: none;
 	margin-left: 0;
 }
-#content ol {
+#content ul ul {
+	margin-bottom: 0;
+}
+#content ol, #content ul {
+	margin-bottom: 21px;
+}
+#content ol li {
 	list-style-type: decimal;
-	margin: 0 0 1.6em 1.25em;
+	margin-left: 40px;
+}
+#content ol ol {
+	margin-bottom: 0;
+}
+#content ol ol li {
+	list-style-type: lower-alpha;
 }
 #content dl {
 	margin: 0 0 1.6em 0;
@@ -212,6 +262,11 @@ ul.col {
 .newsletters li {
 	list-style-type: none;
 	margin-bottom: 1.6em;
+}
+ul.blogroll li {
+	font-size: 16px;
+	line-height: 21px;
+	margin: 10.5px 10px;
 }
 
 /* ------------------------------------------------------------
@@ -255,8 +310,29 @@ tbody tr td {
 /* ------------------------------------------------------------
 Utility Classes
 ------------------------------------------------------------ */
+/* Alignment */
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1.625em;
+}
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1.625em;
+}
+.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 .textcenter {
 	text-align: center;
+}
+.textleft {
+	float: left;
+	width: 50%;
 }
 .third {
 	float: left;
@@ -336,30 +412,28 @@ Front Page: Exceptions
 	width: 960px;
 }
 ul#menu-primary-navigation {
-	margin: 0 0 0 220px;
+	margin: 0 0 0 211px;
 	float: left;
 }
 #access #menu-primary-navigation li {
 	float: left;
 }
 #access #menu-primary-navigation li a:link {	
-	font: 17px/14px 'Cardo', 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
-	text-transform: uppercase;
-	letter-spacing: 1px;
 	display: block;
-	padding: 11px 15px;
-	text-align: center;
-	text-decoration: none;
+	font: 17px/14px 'Cardo', 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif; letter-spacing: 1px; text-align: center; text-decoration: none; text-transform: uppercase;
+	padding: 11px;
 }
 #access #menu-primary-navigation li a:hover {
 	color: #fff;
 	background-color: #9f1533;
 }
 #access #menu-primary-navigation a:visited {
-	color: #9f1533;
-	text-decoration: none;
+	color: #9f1533; text-decoration: none;
 }
 
+/* ------------------------------------------------------------
+Universal Elements
+------------------------------------------------------------ */
 /* === Breadcrumb Nav === */
 #breadcrumb {
 	width: 960px;
@@ -408,6 +482,53 @@ ul#menu-primary-navigation {
 	margin: 0 auto;
 }
 
+/* === Forms === */
+.wpcf7-form .input {
+	color: #413d36; font-family: Cantarell, sans-serif;
+	border: 1px solid #dadada; padding: 4px 6px; margin: 0; width: 90%;
+}
+.wpcf7-form label {
+	display: block;
+}
+.wpcf7-form label, .wpcf7-form .wpcf7-list-item-label {
+	color: #666; font: 15px/24px Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif; letter-spacing: 1.5px;
+}
+.wpcf7-form .input:focus {
+	border-color: #5e8273;
+	box-shadow: 0 0 2px #999;
+		-webkit-box-shadow: 0 0 2px #999; -moz-box-shadow: 0 0 2px #999; -o-box-shadow: 0 0 2px #999; -ms-box-shadow: 0 0 2px #999;
+}
+
+/* === A button === */
+.wpcf7-form .wpcf7-submit, input.button-primary, #searchform input#searchsubmit {
+	background: linear-gradient(top, #9f1533, #811129); 
+		background: -webkit-linear-gradient(top, #9f1533, #811129); background: -moz-linear-gradient(top, #9f1533, #811129); background: -o-linear-gradient(top, #9f1533, #811129); background: -ms-linear-gradient(top, #9f1533, #811129); background-color: #9f1533;
+	border-radius: 3px; 
+		-moz-border-radius: 3px;	-khtml-border-radius: 3px;	-o-border-radius: 3px; -ms-border-radius: 3px;
+	border: 0; padding: 12px 0;
+	color: #eee; font: 24px/24px Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
+	width: 92%;
+}
+.wpcf7-form .wpcf7-submit:hover, input.button-primary:hover, #searchform input#searchsubmit:hover {
+	background: linear-gradient(top, #4f322a, #39241e);
+		background: -webkit-linear-gradient(top, #4f322a, #39241e); background: -moz-linear-gradient(top, #4f322a, #39241e); background: -o-linear-gradient(top, #4f322a, #39241e); background: -ms-linear-gradient(top, #4f322a, #39241e); background-color: #39241e;
+	border: 0;
+	box-shadow: 0 0 3px #999;
+		-webkit-box-shadow: 0 0 3px #999; -moz-box-shadow: 0 0 3px #999; -o-box-shadow: 0 0 3px #999; -ms-box-shadow: 0 0 3px #999;
+	color: #fff;
+	cursor: pointer;
+}
+.wpcf7-response-output {
+	border: 2px solid #fd1;
+	color: #4f322a; font: 15px/24px Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif; letter-spacing: 1.5px;
+	width: 84%;
+}
+span.wpcf7-not-valid-tip {
+	font-weight: bold; letter-spacing: 1px;
+	padding: 2px 4px !important;
+	top: -4px !important; left: 3px !important;
+}
+
 /* === One-column, no sidebar === */
 .page-template-page-onecolumn-php #primary {
 	float: none;
@@ -415,43 +536,36 @@ ul#menu-primary-navigation {
 }
 
 #secondary {
+	border-left: 1px dotted #b2c7be; margin: 24px 0; padding-left: 9px; width: 280px;
 	float: left;
 	list-style-type: none;
-	margin: 24px 0 24px 10px;
-	width: 280px;
 }
 .callout {
-	background: #8AAB9D;
-	padding: 12px 10px;
-	border: 1px solid #5E8273;
+	background: #8aab9d;
+	border: 1px solid #5e8273; margin: 0 -10px; padding: 9px 10px;
 	box-shadow: 1px 1px 5px #ccc;
-	 -webkit-box-shadow: 1px 1px 5px #ccc;
-	 -moz-box-shadow: 1px 1px 5px #ccc;
-	 -o-box-shadow: 1px 1px 5px #ccc;
-	 -ms-box-shadow: 1px 1px 5px #ccc;
+	 -webkit-box-shadow: 1px 1px 5px #ccc; -moz-box-shadow: 1px 1px 5px #ccc; -o-box-shadow: 1px 1px 5px #ccc; -ms-box-shadow: 1px 1px 5px #ccc;
 }
 .join-now {
-	background-color: #D2BE7A;
-	border: 1px solid #C9B261;
+	background-color: #f7f9f8; background: linear-gradient(top, #fff, #f7f9f8);
+		background: -webkit-linear-gradient(top, #fff, #f7f9f8); background: -moz-linear-gradient(top, #fff, #f7f9f8); background: -o-linear-gradient(top, #fff, #f7f9f8); background: -ms-linear-gradient(top, #fff, #f7f9f8);
+	border: 1px solid #5e8273;
 	text-align: center;
 }
+#paypal-submit {
+	width: 140px;
+} 
 #colophon {
 	background: #9eb9ae;
-	border-radius: 0 0 10px 10px;
-	border-top: 1px solid #8aab9d;
-	border: 1px solid #8aab9d;
-	margin-bottom: 24px;
+	border: 1px solid #8aab9d; border-radius: 0 0 10px 10px; border-top: 1px solid #8aab9d; margin-bottom: 24px;
 	box-shadow: 0 2px 5px #bbb;
-		-webkit-box-shadow: 0 2px 5px #bbb;
-		-moz-box-shadow: 0 2px 5px #bbb;
-		-o-box-shadow: 0 2px 5px #bbb;
-		-ms-box-shadow: 0 2px 5px #bbb;
+		-webkit-box-shadow: 0 2px 5px #bbb; -moz-box-shadow: 0 2px 5px #bbb; -o-box-shadow: 0 2px 5px #bbb; -ms-box-shadow: 0 2px 5px #bbb;
 }
 #supplementary {
 	border-top: 1px solid #b2c7be;
 }
 #colophon p {
-	font-family: Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
+	font: 15px/24px Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
 }
 #colophon .widget-area {
 	float: left; 
@@ -493,10 +607,61 @@ img.affiliate-logo {
 .entry-meta a {
 	font-style: normal;
 }
+.book-author {
+	margin-top: 0;
+}
+.book-info {
+	font-size: 13px;
+}
+.book-citation {
+	font-size: 17px;
+}
+.rdbWrapper {
+	margin-top: 18px;
+}
 .single .entry-content {
 	float: left;
 	width: 640px;
 }
 .single #comments {
 	clear: both;
+}
+
+/* === Front Page === */
+.one-third {
+	border-bottom: 3px solid #ddd; margin-right: 3%; margin-bottom: 36px; width: 30%; /* Width = 33% or 1/3 */
+	float: left;
+}
+.one-third-last {
+	clear: right;
+	margin: 0 0 36px 0;
+}
+.one-third h4 {
+	font-size: 2.4em; font-weight: bold;
+	margin: 1px 0 3px 40px;
+}
+.one-third p {
+	font: 1.3em/1.84615385em Cantarell, 'Lucida Sans', 'Lucida Sans Unicode', Verdana, sans-serif;
+	margin-bottom: 9px;
+}
+.one-third p a {
+	font-style: italic;
+}
+#splash-text-11 {
+	background: url('images/info.png') 10px 0 no-repeat;
+}
+#splash-text-12 {
+	background: url('images/news.png') 0 3px no-repeat;
+}
+#splash-text-13 {
+	background: url('images/membership.png') 0 0 no-repeat;
+}
+#splash-text-14 {
+	background: url('images/meetings.png') 4px 0 no-repeat;
+}
+#splash-text-15 {
+	background: url('images/newsletters.png') 6px 2px no-repeat;
+}
+#splash-text-16 {
+	background: url('images/resources.png') 2px 4px no-repeat;
 }
